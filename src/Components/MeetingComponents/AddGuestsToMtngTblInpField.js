@@ -17,33 +17,33 @@ function AddGuestsToMtngTblInpField({ tableNumberId, tableNumber, tblSesnGuests,
     const handleSubmitGuests = () => {
         setIsAddingGuests(true);
         const newGData = {
-            selectedGuests: selectedGuests, 
-            tableNumberId : tableNumberId, 
-            tableNumber : tableNumber, 
+            selectedGuests: selectedGuests,
+            tableNumberId: tableNumberId,
+            tableNumber: tableNumber,
             session: session
         }
-        
+
         addGuestsToMtngTblSess(newGData).then(status => {
             if (status === 200) {
                 setSelectedGuests([]);
-                fetchTblSessGuests({tblNo: tableNumber, session}, setTblSesnGuests);
+                fetchTblSessGuests({ tblNo: tableNumber, session }, setTblSesnGuests);
             } else { console.log(status) }
             setIsAddingGuests(false);
         });
-    };    
+    };
 
     const filteredGuests = allGuests.filter((option) => !selectedGuests.includes(option) && !tblSesnGuests.some((member) => member.bnf_name === option.bnf_name));
-    
+
     return (
         <Wrapper>
             <Autocomplete
                 multiple
                 id='guestsSelector'
                 options={filteredGuests}
-                getOptionLabel={(option) => option.bnf_name}
+                getOptionLabel={(option) => option.bnf_name }
                 onChange={handleGuestChange}
                 value={selectedGuests}
-                renderInput={(params) => (
+                renderInput={(params, index) => (
                     <TextField
                         {...params}
                         variant="outlined"
